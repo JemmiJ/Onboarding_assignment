@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:assistance_app/theme.dart';
 import 'package:assistance_app/screens/signup_screen.dart';
+import 'package:assistance_app/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:assistance_app/screens/forgot_password_screen.dart';
 import 'package:flutter/gestures.dart';
@@ -36,6 +37,10 @@ class LoginState extends State<LoginScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Login Succesful')));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomeScreen()),
+      );
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,

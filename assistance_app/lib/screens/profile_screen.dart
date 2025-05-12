@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:assistance_app/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:assistance_app/screens/service_booking_history_screen.dart';
+import 'package:assistance_app/screens/edit_profile_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -60,7 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       leading: Icon(Icons.edit, color: AppColors.text2),
                       title: Text('Edit'),
                       onTap: () {
-                        Navigator.pushNamed(context, '/edit_profile');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
+                          ),
+                        );
                       },
                     ),
                     Divider(),

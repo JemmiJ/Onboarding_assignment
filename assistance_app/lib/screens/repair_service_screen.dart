@@ -19,6 +19,12 @@ class RepairServiceScreenState extends State<RepairServiceScreen> {
   bool isLoadingLocation = false;
 
   @override
+  void dispose() {
+    vehicleModelController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     fetchLocation();
@@ -30,43 +36,63 @@ class RepairServiceScreenState extends State<RepairServiceScreen> {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      setState(() => currentAddress = "Location services disabled.");
+      setState(() {
+        currentAddress = "Location services disabled.";
+        isLoadingLocation = false;
+      });
       return;
     }
 
+    // Check and request permission if needed
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        setState(() => currentAddress = "Permission denied.");
+        setState(() {
+          currentAddress = "Permission denied.";
+          isLoadingLocation = false;
+        });
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      setState(() => currentAddress = "Permission permanently denied.");
+      setState(() {
+        currentAddress = "Permission permanently denied.";
+        isLoadingLocation = false;
+      });
       return;
     }
 
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
     try {
+      // Try to get the current position with a timeout
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      ).timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          throw Exception("Location request timed out");
+        },
+      );
+
+      // Reverse geocode the coordinates
       List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );
 
       Placemark place = placemarks.first;
+
       setState(() {
-        currentAddress =
-            "${place.street}, ${place.locality}, ${place.administrativeArea}";
+        currentAddress = "${place.street}, ${place.locality}, ${place.country}";
       });
     } catch (e) {
-      setState(() => currentAddress = "Failed to get address.");
+      setState(() {
+        currentAddress = "Failed to get location: $e";
+      });
     }
 
     setState(() => isLoadingLocation = false);
@@ -140,12 +166,20 @@ class RepairServiceScreenState extends State<RepairServiceScreen> {
             // Image Banner
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                service['imageUrl'] ?? 'assets/big_repair.png',
-                height: 180,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child:
+                  service['imageURL'] != null
+                      ? Image.network(
+                        service['imageURL'],
+                        height: 180,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )
+                      : Image.asset(
+                        'assets/big_repair.png',
+                        height: 180,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
             ),
             const SizedBox(height: 12),
 

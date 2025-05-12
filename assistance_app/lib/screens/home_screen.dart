@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
     {
       'name': 'Flat Battery Service',
       'image': 'assets/flat_battery_picture.png',
-      'icon': 'assets/battery_icon.png',
+      'icon': 'assets/flat_battery_icon.png',
     },
     {
       'name': 'Wash Service',
@@ -214,6 +214,9 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.redAccent,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.location_pin), label: 'Map'),
