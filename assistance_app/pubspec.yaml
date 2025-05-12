@@ -65,6 +65,26 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/facebook.png
+    - assets/google.png
+    - assets/big_repair.png
+    - assets/repair_service_picture.png
+    - assets/flat_service_picture.png
+    - assets/flat_battery_picture.png
+    - assets/car_wash_picture.png
+    - assets/recovery_service_picture.png
+    - assets/oil_change_picture.png
+    - assets/repair_icon.png
+    - assets/flat_tyre_icon.png
+    - assets/flat_battery_icon.png
+    - assets/car_wash_Icon.png
+    - assets/car_recovery_icon.png
+    - assets/oil_change_icon.png
+    - assets/Ellipse 1874.png
+    - assets/Ellipse 1877.png
+    - assets/Ellipse 1876.png
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

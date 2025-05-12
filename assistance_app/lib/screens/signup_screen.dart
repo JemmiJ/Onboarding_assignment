@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:assistance_app/theme.dart';
 import 'package:assistance_app/screens/login_screen.dart';
+import 'package:assistance_app/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -50,6 +51,10 @@ class _SignupState extends State<SignupScreen> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text('Account created!')));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => HomeScreen()),
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
