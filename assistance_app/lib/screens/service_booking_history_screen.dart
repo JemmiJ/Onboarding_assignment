@@ -83,10 +83,11 @@ class _BookingsHistoryScreenState extends State<BookingsHistoryScreen> {
             itemCount: bookings.length,
             itemBuilder: (context, index) {
               final booking = bookings[index];
-              final serviceName = booking['serviceName'];
-              final date = (booking['date'] as Timestamp).toDate();
-              final imageUrl = booking['imageUrl'];
-              final status = booking['status'];
+              final serviceName = booking['serviceTitle'] ?? 'Unknown Service';
+              final model = booking['vehicleModel'] ?? 'Unknown Model';
+              final date =
+                  (booking['date'] as Timestamp?)?.toDate() ?? DateTime.now();
+              final status = booking['status'] ?? 'Unknown';
 
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -95,20 +96,20 @@ class _BookingsHistoryScreenState extends State<BookingsHistoryScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      imageUrl,
-                      width: 60,
-                      height: 60,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   title: Text(
                     serviceName,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(DateFormat.yMMMEd().add_jm().format(date)),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(DateFormat.yMMMEd().add_jm().format(date)),
+                    ],
+                  ),
                   trailing: Text(
                     status,
                     style: TextStyle(

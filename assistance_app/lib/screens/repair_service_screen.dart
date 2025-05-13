@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -108,14 +109,18 @@ class RepairServiceScreenState extends State<RepairServiceScreen> {
       return;
     }
 
+    final currentUser = FirebaseAuth.instance.currentUser;
+
     final bookingData = {
+      'userId': currentUser?.uid,
       'serviceId': widget.service['id'],
-      'serviceTitle': widget.service['title'],
+      'serviceTitle': "Repair Service",
       'price': widget.service['price'],
       'vehicleModel': vehicleModelController.text,
       'vehicleLocation': currentAddress,
       'needsParts': needsParts,
-      'timestamp': FieldValue.serverTimestamp(),
+      'date': Timestamp.now(),
+      'status': 'Pending',
     };
 
     try {

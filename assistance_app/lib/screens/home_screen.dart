@@ -112,8 +112,9 @@ class HomeScreen extends StatelessWidget {
 
             // Promo Banner
             Container(
+              height: 100,
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                 color: Colors.redAccent,
                 borderRadius: BorderRadius.circular(16),
@@ -141,24 +142,24 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    right: -10,
-                    top: -10,
+                    right: 10,
+                    top: 10,
                     child: CircleAvatar(
                       radius: 30,
                       backgroundImage: AssetImage('assets/Ellipse 1874.png'),
                     ),
                   ),
                   Positioned(
-                    right: 30,
-                    top: 10,
+                    right: 50,
+                    top: 30,
                     child: CircleAvatar(
                       radius: 20,
                       backgroundImage: AssetImage('assets/Ellipse 1877.png'),
                     ),
                   ),
                   Positioned(
-                    right: 60,
-                    top: 20,
+                    right: 80,
+                    top: 60,
                     child: CircleAvatar(
                       radius: 15,
                       backgroundImage: AssetImage('assets/Ellipse 1876.png'),
